@@ -102,9 +102,19 @@ I just needed to get this off my chest for my own peace of mind.</p>
       <h1 id="judulakhir"></h1>
       <p id="kalimatakhir"></p>
       <p id="palingakhir"></p>
-      <div id="TombolWA">
-        <a onClick="menuju()">Balas </a>
-      </div>
+      <div id="TombolWA" style="text-align:center; margin:30px 0;">
+    <button id="pendapat" style="padding:12px 30px; margin:10px; background:#4CAF50; color:white; border:none; border-radius:10px; font-size:18px; cursor:pointer;">
+        Bagaimana pendapatmu?
+    </button>
+    <button id="cukup" style="padding:12px 30px; margin:10px; background:#999; color:white; border:none; border-radius:10px; font-size:18px; cursor:pointer;">
+        Ini cukup
+    </button>
+</div>
+
+<!-- Tempat form balasan muncul -->
+<div id="reply-form" style="display:none; max-width:600px; margin:30px auto; padding:25px; background:rgba(255,255,255,0.9); border-radius:15px; box-shadow:0 5px 20px rgba(0,0,0,0.2);">
+    <!-- JS akan isi konten form di sini -->
+</div>
   </section>
   
   <div id="initom" class="menu">
@@ -138,8 +148,65 @@ pesanwhatsapp = "";
 const body = document.querySelector("body"); initom.style="opacity:0;bottom:0;transition:none"; audio = new Audio('' + linkmp3.src); function berjatuhan() {const heart = document.createElement("div"); heart.className = "fas fa-heart"; heart.style.left = (Math.random() * 90)+"vw"; heart.style.animationDuration = (Math.random()*3)+2+"s"; body.appendChild(heart);} setInterval(function name(params) {var heartArr = document.querySelectorAll(".fa-heart"); if (heartArr.length > 100) {heartArr[0].remove()}},100);
 </script>
 <script src="https://feeldreams.github.io/maukahkamu/main.js"></script>
+<script>
+// Kode untuk tombol "Bagaimana pendapatmu?"
+document.getElementById('pendapat').addEventListener('click', function() {
+    document.getElementById('reply-form').style.display = 'block';
+    document.getElementById('TombolWA').style.display = 'none';
+
+    document.getElementById('reply-form').innerHTML = `
+        <p style="font-size:20px; text-align:center; margin-bottom:20px; color:#333;">
+            Aku seneng banget kalau kamu mau cerita pendapatmu... Tulis aja ya ♡
+        </p>
+        
+        <form action="https://formspree.io/f/xqedbkwv" method="POST">
+            <input type="hidden" name="_subject" value="Balasan Elsa dari Surat Cinta 💌">
+            <input type="hidden" name="_next" value="#terima-kasih">
+            <input type="hidden" name="_autoresponse" value="Terima kasih udah balas ya! Aku baca secepatnya ♡">
+
+            <textarea name="pesan" rows="7" placeholder="Tulis pendapatmu, cerita, atau apa aja di sini..." required 
+                      style="width:100%; padding:12px; font-size:16px; border:1px solid #ccc; border-radius:10px; resize:vertical; box-sizing:border-box;"></textarea>
+
+            <input type="text" name="nama" placeholder="Nama kamu (boleh kosong)" 
+                   style="width:100%; margin:15px 0; padding:10px; font-size:16px; border:1px solid #ccc; border-radius:10px; box-sizing:border-box;">
+
+            <button type="submit" 
+                    style="width:100%; padding:14px; background:#ff69b4; color:white; border:none; border-radius:10px; font-size:18px; cursor:pointer; font-weight:bold;">
+                Kirim Balasan
+            </button>
+        </form>
+
+        <div id="terima-kasih" style="display:none; margin-top:25px; padding:20px; background:#e8f5e9; border-radius:10px; text-align:center; color:#2e7d32; font-size:18px;">
+            Terima kasih banyak! Pesanmu udah terkirim ke aku ♡<br>Aku langsung baca ya~
+        </div>
+    `;
+});
+
+// Kode untuk tombol "Ini cukup" (opsional, bisa diganti atau dihapus kalau nggak perlu)
+document.getElementById('cukup').addEventListener('click', function() {
+    document.getElementById('TombolWA').style.display = 'none';
+    document.getElementById('reply-form').innerHTML = `
+        <p style="font-size:22px; text-align:center; color:#555; margin:40px 0;">
+            Oke... terima kasih udah baca sampai akhir ya ♡<br>Jaga diri selalu!
+        </p>
+    `;
+    document.getElementById('reply-form').style.display = 'block';
+});
+
+// Tampilkan pesan terima kasih setelah kirim form
+window.addEventListener('hashchange', function() {
+    if (window.location.hash === '#terima-kasih') {
+        const thanks = document.getElementById('terima-kasih');
+        if (thanks) {
+            thanks.style.display = 'block';
+            thanks.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+});
+</script>
 </body>
 </html>
+
 
 
 
